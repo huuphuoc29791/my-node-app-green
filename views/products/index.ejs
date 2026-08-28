@@ -21,7 +21,7 @@
         <h1>Product List</h1>
 
         <a href="/products/create" class="btn btn-success mb-2">
-            <i class="fa fa-plus" aria-hidden="true"></i> Add new product
+            <i class="fa fa-plus" aria-hidden="true"></i> Add new
         </a>
 
         <table class="table table-light">
@@ -46,19 +46,22 @@
                         <td>
                             <%= p.price %>
                         </td>
-                        <td style="width: 50%;">
+                        <td>
                             <%= p.description %>
                         </td>
                         <td>
-                            <a href="" class="btn btn-outline-info btn-sm">
+                            <a href="/products/<%= p.id %>" class="btn btn-outline-info btn-sm">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
-                            <a href="" class="btn btn-outline-warning btn-sm">
+                            <a href="/products/<%= p.id %>/edit" class="btn btn-outline-warning btn-sm">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
-                            <a href="" class="btn btn-outline-danger btn-sm">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
+                            <form action="/products/<%= p.id %>/delete" method="post" class="d-inline"
+                                onsubmit="return confirm(`Are you sure you want to delete product <%= p.name %>?`)">
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     <% }) %>
