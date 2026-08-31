@@ -143,6 +143,104 @@ app.post('/login', (req, res) => {
 	});
 });
 
+// ==================================================
+
+app.get('/students', (req, res) => {
+	const sql = `SELECT s.*, c.name AS classroom_name
+        FROM students s JOIN classrooms c ON s.classroom_id = c.id
+        ORDER BY s.id`;
+	db.query(sql, (err, results) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+		res.render('students/index', {
+			students: results
+		});
+	});
+});
+
+app.get('/students/create', (req, res) => {
+	const sql = 'SELECT * FROM classrooms';
+	db.query(sql, (err, results) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+		res.render('students/create', {
+			classrooms: results
+		});
+	});
+});
+
+app.post('/students/create', (req, res) => {
+	const { name, age, classroom_id } = req.body;
+	const sql =
+		'INSERT INTO students (name, age, classroom_id) VALUES (?, ?, ?)';
+	db.query(sql, [name, age, classroom_id], (err, results) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+		res.redirect('/students');
+	});
+});
+
+app.get('/students/:id/edit', (req, res) => {
+	const { id } = req.params;
+	const sqlStudent = 'SELECT * FROM students WHERE id = ?';
+	db.query(sqlStudent, [id], (err, studentResults) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+
+		if (studentResults.length == 0) {
+			return res.send('Student not found');
+		}
+
+		const sqlClassrooms = 'SELECT * FROM classrooms';
+		db.query(sqlClassrooms, (err, classroomResults) => {
+			if (err) {
+				console.error(err);
+				return res.send('Database error');
+			}
+			res.render('students/edit', {
+				student: studentResults[0],
+				classrooms: classroomResults
+			});
+		});
+	});
+});
+
+app.post('/students/:id/edit', (req, res) => {
+	const { name, age, classroom_id } = req.body;
+	const { id } = req.params;
+	const sql =
+		'UPDATE students SET name = ?, age = ?, classroom_id = ? WHERE id = ?';
+	db.query(sql, [name, age, classroom_id, id], (err, results) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+		res.redirect('/students');
+	});
+});
+
+app.post('/students/:id/delete', (req, res) => {
+	const { id } = req.params;
+	const sql = 'DELETE FROM students WHERE id = ?';
+	db.query(sql, [id], (err, results) => {
+		if (err) {
+			console.error(err);
+			return res.send('Database error');
+		}
+		res.redirect('/students');
+	});
+});
+
+// ==================================================
+
 app.listen(8000, () => {
 	console.log(`Server is running at http://localhost:8000`);
 });
