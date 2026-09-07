@@ -20,7 +20,7 @@ const create = async (name, age) => {
 
 const update = async (id, name, age) => {
 	const [result] = await db.query(
-		'UPDATE students SET name = ?, age = ? WHERE id = ?',
+		'UPDATE students SET name = ?, age = ?   WHERE id = ?',
 		[name, age, id]
 	);
 	return result;
