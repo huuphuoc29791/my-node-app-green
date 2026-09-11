@@ -5,14 +5,12 @@ const productController = require('../controllers/productController');
 
 router.get('/', productController.index);
 
-router.get('/create', productController.createForm);
-router.post('/create', productController.store);
+router.get('/:id', productController.show);
 
-router.get('/:id', productController.details);
+router.post('/', productController.create);
 
-router.get('/:id/edit', productController.editForm);
-router.post('/:id/edit', productController.update);
+router.put('/:id', productController.update);
 
-router.post('/:id/delete', productController.remove);
+router.delete('/:id', productController.remove);
 
 module.exports = router;
