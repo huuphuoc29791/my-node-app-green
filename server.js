@@ -4,6 +4,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+const categoryRoutes = require('./routes/categoryRoutes');
 const productRoutes = require('./routes/productRoutes');
 
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 
 app.listen(PORT, () => {
