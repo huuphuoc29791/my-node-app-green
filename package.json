@@ -20,10 +20,12 @@
 		"seed": "node seeders/seed.js"
 	},
 	"dependencies": {
+		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"ejs": "^6.0.1",
 		"express": "^5.2.1",
+		"express-session": "^1.19.0",
 		"mysql2": "^3.24.4"
 	},
 	"devDependencies": {
