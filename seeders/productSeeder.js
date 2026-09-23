@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-const seed = async () => {
+const seedProducts = async () => {
 	try {
 		await db.query('SET FOREIGN_KEY_CHECKS = 0');
 
@@ -33,7 +33,7 @@ const seed = async () => {
                 ('Apple Magic Keyboard', 2990000, 25, 4)
         `);
 
-		console.log('Seed data successfully.');
+		console.log('Seed products successfully.');
 	} catch (error) {
 		console.error('Seeder error:', error);
 	} finally {
@@ -41,4 +41,4 @@ const seed = async () => {
 	}
 };
 
-seed();
+seedProducts();
