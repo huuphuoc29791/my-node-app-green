@@ -5,7 +5,7 @@ const productController = require('../controllers/productController');
 
 const { requireLogin, requireRoles } = require('../middlewares/authMiddleware');
 
-router.get('/', requireLogin, productController.index);
+router.get('/', productController.index);
 
 router.get('/:id', productController.show);
 
