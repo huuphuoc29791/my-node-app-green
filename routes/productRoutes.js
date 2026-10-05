@@ -7,6 +7,8 @@ const { requireLogin, requireRoles } = require('../middlewares/authMiddleware');
 
 router.get('/', productController.index);
 
+router.get('/search', productController.search);
+
 router.get('/:id', productController.show);
 
 router.post('/', requireLogin, requireRoles('admin'), productController.create);

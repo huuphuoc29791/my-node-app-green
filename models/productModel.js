@@ -55,10 +55,23 @@ const remove = async id => {
 	return result;
 };
 
+const search = async keyword => {
+	const [result] = await db.query(
+		`
+        SELECT *
+        FROM products
+        WHERE name LIKE ?
+        `,
+		[`%${keyword}%`]
+	);
+	return result;
+};
+
 module.exports = {
 	getAll,
 	getById,
 	create,
 	update,
-	remove
+	remove,
+	search
 };

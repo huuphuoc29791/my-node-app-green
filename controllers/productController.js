@@ -112,12 +112,31 @@ const remove = async (req, res) => {
 	}
 };
 
+// GET /api/products?q=keyword
+const search = async (req, res) => {
+	try {
+		const { q } = req.query;
+		const products = await Product.search(q);
+
+		res.status(200).json({
+			data: products,
+			message: 'Search for products successfully'
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			message: 'Internal server error'
+		});
+	}
+};
+
 module.exports = {
 	index,
 	show,
 	create,
 	update,
-	remove
+	remove,
+	search
 };
 
 // RESTful API
