@@ -1,32 +1,32 @@
 const Product = require('../models/productModel');
 
+const AppError = require('../utils/AppError');
+
 // GET /api/products
-const index = async (req, res) => {
+const index = async (req, res, next) => {
 	try {
 		const products = await Product.getAll();
+		if (!products) {
+			throw new AppError('Cannot load product list', 500);
+		}
 
 		res.status(200).json({
 			data: products,
 			message: 'Get product list successfully'
 		});
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({
-			message: 'Internal server error'
-		});
+		next(error);
 	}
 };
 
 // GET /api/products/:id
-const show = async (req, res) => {
+const show = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const product = await Product.getById(id);
 
 		if (!product) {
-			return res.status(404).json({
-				message: 'Product not found'
-			});
+			throw new AppError('Product not found', 404);
 		}
 
 		res.status(200).json({
@@ -34,10 +34,7 @@ const show = async (req, res) => {
 			message: 'Get product details successfully'
 		});
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({
-			message: 'Internal server error'
-		});
+		next(error);
 	}
 };
 
