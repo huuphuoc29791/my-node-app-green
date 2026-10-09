@@ -21,13 +21,13 @@ const getById = async id => {
 	return rows[0];
 };
 
-const create = async (name, price, stock, category_id) => {
+const create = async (name, price, stock, category_id, image) => {
 	const [result] = await db.query(
 		`
-        INSERT INTO products (name, price, stock, category_id)
-        VALUES (?, ?, ?, ?)    
+        INSERT INTO products (name, price, stock, category_id, image)
+        VALUES (?, ?, ?, ?, ?)    
     `,
-		[name, price, stock, category_id]
+		[name, price, stock, category_id, image]
 	);
 	return result;
 };

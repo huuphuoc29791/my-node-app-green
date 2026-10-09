@@ -7,6 +7,7 @@ const { createProductValidator } = require('../validators/productValidator');
 
 const { requireLogin, requireRoles } = require('../middlewares/authMiddleware');
 const { validate } = require('../middlewares/validateMiddleware');
+const { upload } = require('../middlewares/uploadMiddleware');
 
 router.get('/', productController.index);
 
@@ -18,6 +19,7 @@ router.post(
 	'/',
 	requireLogin,
 	requireRoles('admin'),
+	upload.single('image'),
 	createProductValidator,
 	validate,
 	productController.create

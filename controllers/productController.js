@@ -43,13 +43,25 @@ const create = async (req, res) => {
 	try {
 		const { name, price, stock, category_id } = req.body;
 
+		let image = null;
+
+		if (req.file) {
+			image = `/uploads/products/${req.file.filename}`;
+		}
+
 		if (!name || name.trim() === '') {
 			return res.status(400).json({
 				message: 'Product name is required'
 			});
 		}
 
-		const result = await Product.create(name, price, stock, category_id);
+		const result = await Product.create(
+			name,
+			price,
+			stock,
+			category_id,
+			image
+		);
 
 		const product = await Product.getById(result.insertId);
 
